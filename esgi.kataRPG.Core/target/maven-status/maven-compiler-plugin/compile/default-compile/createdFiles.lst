@@ -1,0 +1,8 @@
+esgi\kataRPG\Core\jobs\Job.class
+esgi\kataRPG\Core\classes\EntitieRPG.class
+esgi\kataRPG\Core\factions\Faction.class
+esgi\kataRPG\Core\classes\WarriorRPG.class
+esgi\kataRPG\Core\classes\MageRPG.class
+esgi\kataRPG\Core\factions\Alliance.class
+esgi\kataRPG\Core\factions\Horde.class
+esgi\kataRPG\Core\classes\CharacterRPG.class
