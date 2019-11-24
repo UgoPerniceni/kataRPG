@@ -19,7 +19,7 @@ public class EntitieRPG {
 
     public void setHealth(int health) {
         this.health = health;
-        if(health == 0){
+        if(health <= 0){
             this.alive = false;
         }
     }
@@ -52,5 +52,11 @@ public class EntitieRPG {
     @Override
     public int hashCode() {
         return Objects.hash(health, alive);
+    }
+
+    @Override
+    public String toString() {
+        return "name='" + name + '\'' +
+                ", health=" + health;
     }
 }

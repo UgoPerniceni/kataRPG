@@ -1,5 +1,6 @@
 package esgi.kataRPG.Core.factions;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -9,7 +10,7 @@ public class Faction {
     private List<Faction> friends;
 
     public Faction() {
-
+        friends = new ArrayList<Faction>();
     }
 
     public String getName() {
@@ -37,11 +38,18 @@ public class Faction {
     public List<Faction> getFriends(){
         return this.friends;
     }
-    public boolean sameFaction(Faction faction){
-        if(this.equals(faction) || this.friends.contains(faction))
-            return false;
-        else
+    public boolean compareFactionToListOfFaction(List<Faction> factions){
+        if(factions.contains(this)){
             return true;
+        }
+        else{
+            for(Faction faction : factions){
+                if(faction.friends.contains(this)){
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override

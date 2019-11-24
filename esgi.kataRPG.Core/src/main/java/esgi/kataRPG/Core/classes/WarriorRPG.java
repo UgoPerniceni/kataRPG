@@ -12,14 +12,15 @@ public class WarriorRPG extends CharacterRPG {
 
         if(character.isAlive())
             {
-                if(!this.getFaction().sameFaction(character.getFaction()))
+                if(!this.sameFaction(character))
                 {
                     int randomDamage = new Random().nextInt(9);
 
                     character.setHealth(character.getHealth() - randomDamage);
                 }
                 else
-                    throw new IllegalArgumentException("Character is on the same faction.");
+                    throw new IllegalArgumentException("Character must not be on the same faction");
+
             }
             else{
                 throw new IllegalStateException("Character is dead.");
@@ -39,5 +40,8 @@ public class WarriorRPG extends CharacterRPG {
 
     }
 
-
+    @Override
+    public String toString() {
+        return "WarriorRPG{} " + super.toString();
+    }
 }

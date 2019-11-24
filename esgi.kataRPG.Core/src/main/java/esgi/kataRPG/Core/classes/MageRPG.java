@@ -10,12 +10,14 @@ public class MageRPG extends CharacterRPG{
     public void attack(CharacterRPG character){
         if(character.isAlive())
         {
-            if(!this.getFaction().sameFaction(character.getFaction()))
+
+            if(!this.sameFaction(character))
             {
                 character.setHealth(character.getHealth() - 0);
             }
             else
-                throw new IllegalArgumentException("Character is on the same faction.");
+                throw new IllegalArgumentException("Character must not be on the same faction");
+
         }
         else{
             throw new IllegalStateException("Character is dead.");

@@ -5,19 +5,26 @@ import esgi.kataRPG.Core.factions.Horde;
 import esgi.kataRPG.Core.factions.Faction;
 import esgi.kataRPG.Core.jobs.Job;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class CharacterRPG extends EntitieRPG{
     private Job job;
-    private Faction faction = null;
+    private List<Faction> factions;
 
     public CharacterRPG(String name, String jobName) {
         super(name);
         job = new Job(jobName);
+        factions = new ArrayList<Faction>();
     }
 
-    public Faction getFaction() {
-        return faction;
+    public List<Faction> getFactions() {
+        return factions;
+    }
+
+    public void setFactions(List<Faction> factions) {
+        this.factions = factions;
     }
 
     @Override
@@ -41,10 +48,10 @@ public class CharacterRPG extends EntitieRPG{
         {
             if(character.isAlive())
             {
-                if(!this.getFaction().sameFaction(character.getFaction()))
+                if(this.sameFaction(character))
                     character.setHealth(character.getHealth() - 1);
                 else
-                    throw new IllegalArgumentException("Character is on the same faction.");
+                    throw new IllegalArgumentException("Character must not be on the same faction");
             }
             else{
                 throw new IllegalStateException("Character is dead.");
@@ -60,10 +67,10 @@ public class CharacterRPG extends EntitieRPG{
     {
         if(character.isAlive())
         {
-            if(this.getFaction().sameFaction(character.getFaction()))
+            if(this.sameFaction(character))
                 character.setHealth(character.getHealth() + 1);
             else
-                throw new IllegalStateException("Character must be on the same faction.");
+                throw new IllegalArgumentException("Character must be on the same faction");
         }
         else{
             throw new IllegalStateException("Character is dead.");
@@ -73,9 +80,9 @@ public class CharacterRPG extends EntitieRPG{
 
     public void joinFaction(String factionName){
         if(factionName.equals("Alliance")){
-            this.faction = new Alliance();
+            factions.add(new Alliance());
         }else if(factionName.equals("Horde")){
-            this.faction = new Horde();
+            factions.add(new Horde());
         }
         else{
             throw new IllegalArgumentException("Faction doesn't exist");
@@ -83,6 +90,32 @@ public class CharacterRPG extends EntitieRPG{
     }
 
     public void leaveFaction(String factionName){
-        this.faction = null;
+        factions.remove(factionName);
+    }
+
+    public boolean sameFaction(CharacterRPG character){
+        for(Faction faction : this.getFactions()){
+            if(faction.compareFactionToListOfFaction(character.getFactions())){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public String toString() {
+        String Stringfactions = "[";
+
+        for(Faction faction : factions){
+            Stringfactions = Stringfactions + faction.getName() + ", ";
+        }
+
+        Stringfactions = Stringfactions.substring(0, Stringfactions.length() - 2);
+        Stringfactions = Stringfactions + "]";
+
+        return super.toString() + ", " +
+                "job=" + job.getJobName() +
+                ", faction(s)=" + Stringfactions;
     }
 }
